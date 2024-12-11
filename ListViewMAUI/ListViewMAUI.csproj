@@ -1,0 +1,126 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>ListViewMAUI</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>ListViewMAUI</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.listviewmaui</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Remove="C:\Users\JayaleshwariN\.nuget\packages\syncfusion.maui.core\27.2.5\buildTransitive\..\buildTransitive\Resources\Fonts\MauiMaterialAssets.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\MauiSampleFontIcon.ttf" />
+	  <None Remove="Resources\Images\add.png" />
+	  <None Remove="Resources\Images\people_circle0.png" />
+	  <None Remove="Resources\Images\people_circle1.png" />
+	  <None Remove="Resources\Images\people_circle10.png" />
+	  <None Remove="Resources\Images\people_circle11.png" />
+	  <None Remove="Resources\Images\people_circle12.png" />
+	  <None Remove="Resources\Images\people_circle13.png" />
+	  <None Remove="Resources\Images\people_circle14.png" />
+	  <None Remove="Resources\Images\people_circle15.png" />
+	  <None Remove="Resources\Images\people_circle16.png" />
+	  <None Remove="Resources\Images\people_circle17.png" />
+	  <None Remove="Resources\Images\people_circle18.png" />
+	  <None Remove="Resources\Images\people_circle19.png" />
+	  <None Remove="Resources\Images\people_circle2.png" />
+	  <None Remove="Resources\Images\people_circle20.png" />
+	  <None Remove="Resources\Images\people_circle21.png" />
+	  <None Remove="Resources\Images\people_circle22.png" />
+	  <None Remove="Resources\Images\people_circle23.png" />
+	  <None Remove="Resources\Images\people_circle24.png" />
+	  <None Remove="Resources\Images\people_circle25.png" />
+	  <None Remove="Resources\Images\people_circle26.png" />
+	  <None Remove="Resources\Images\people_circle27.png" />
+	  <None Remove="Resources\Images\people_circle28.png" />
+	  <None Remove="Resources\Images\people_circle3.png" />
+	  <None Remove="Resources\Images\people_circle4.png" />
+	  <None Remove="Resources\Images\people_circle5.png" />
+	  <None Remove="Resources\Images\people_circle6.png" />
+	  <None Remove="Resources\Images\people_circle7.png" />
+	  <None Remove="Resources\Images\people_circle8.png" />
+	  <None Remove="Resources\Images\people_circle9.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Syncfusion.Maui.ListView" Version="27.2.5" />
+		<PackageReference Include="Syncfusion.Maui.DataForm" Version="27.2.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\ContactPage.xaml.cs">
+	    <DependentUpon>ContactPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Update="Resources\Fonts\MauiSampleFontIcon.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiFont>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\ContactPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>
