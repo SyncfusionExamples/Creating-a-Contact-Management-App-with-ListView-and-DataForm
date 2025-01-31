@@ -151,7 +151,10 @@ namespace ListViewMAUI
 
         internal async void OnSaveContact()
         {
-            contactsInfo.Add(SelectedItem);
+            if (!contactsInfo.Contains(SelectedItem))
+            {
+                contactsInfo.Add(SelectedItem);
+            }
             await App.Current.MainPage.Navigation.PopAsync();
         }
 
