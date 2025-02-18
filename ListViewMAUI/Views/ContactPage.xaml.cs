@@ -27,8 +27,8 @@ namespace ListViewMAUI
                     viewmodel.OnDeleteContactCommand();
                     break;
                 case "Save":
-                    viewmodel.OnSaveContact();
                     contactForm.Commit();
+                    viewmodel.OnSaveContact();
                     break;
                 case "Cancel":
                     viewmodel.OnCancelContact();
