@@ -9,7 +9,7 @@ namespace ListViewMAUI
         #region Fields
 
         private ObservableCollection<ContactInfo>? contactsInfo;
-        private ContactInfo selectContact;
+        private ContactInfo? selectContact;
         private bool isReadOnly;
 
         #endregion
@@ -35,7 +35,7 @@ namespace ListViewMAUI
             }
         }
 
-        public ContactInfo SelectedItem
+        public ContactInfo? SelectedItem
         {
             get
             {
@@ -71,11 +71,11 @@ namespace ListViewMAUI
             }
         }
 
-        public ObservableCollection<ContactOption> ContactOptions { get; set; }
+        public ObservableCollection<ContactOption>? ContactOptions { get; set; }
 
-        public ObservableCollection<ContactOption> CRUDOptions { get; set; }
+        public ObservableCollection<ContactOption>? CRUDOptions { get; set; }
 
-        public ObservableCollection<ContactOption> CommitOptions { get; set; }
+        public ObservableCollection<ContactOption>? CommitOptions { get; set; }
 
         #endregion
 
@@ -94,13 +94,13 @@ namespace ListViewMAUI
         #endregion
 
         #region  Commands
-        public Command CreateContactCommand { get; set; }
-        public Command SaveContactCommand { get; set; }
-        public Command CancelContactCommand { get; set; }
-        public Command EditContactCommand { get; set; }
-        public Command DeleteContactCommand { get; set; }
-        public Command TapCommand { get; set; }
-        public Command ShowContactCommand { get; set; }
+        public Command? CreateContactCommand { get; set; }
+        public Command? SaveContactCommand { get; set; }
+        public Command? CancelContactCommand { get; set; }
+        public Command? EditContactCommand { get; set; }
+        public Command? DeleteContactCommand { get; set; }
+        public Command? TapCommand { get; set; }
+        public Command? ShowContactCommand { get; set; }
 
         private void InitializeCommands()
         {
@@ -140,25 +140,31 @@ namespace ListViewMAUI
             IsReadOnly = false;
             var editPage = new ContactPage();
             editPage.BindingContext = this;
-            await App.Current.MainPage.Navigation.PushAsync(editPage);
+            var navigation = Application.Current?.Windows[0].Navigation;
+            if (navigation != null)
+                await navigation.PushModalAsync(editPage);
         }
 
         internal async void OnCancelContact()
         {
             SelectedItem = null;
-            await App.Current.MainPage.Navigation.PopAsync();
+            var navigation = Application.Current?.Windows[0].Navigation;
+            if (navigation != null)
+                await navigation.PopModalAsync();
         }
 
         internal async void OnSaveContact()
         {
-            if (!contactsInfo.Contains(SelectedItem))
+            if (contactsInfo != null && SelectedItem != null && !contactsInfo.Contains(SelectedItem) && App.Current != null)
             {
                 contactsInfo.Add(SelectedItem);
             }
-            await App.Current.MainPage.Navigation.PopAsync();
+            var navigation = Application.Current?.Windows[0].Navigation;
+            if (navigation != null)
+                await navigation.PopModalAsync();
         }
 
-        private async void OnTapCommand(object eventArgs)
+        private void OnTapCommand(object eventArgs)
         {
             var tappedEventArgs = eventArgs as Syncfusion.Maui.ListView.ItemTappedEventArgs;
             if (tappedEventArgs != null)
@@ -171,18 +177,26 @@ namespace ListViewMAUI
                 if (!SelectedItem.IsExpanded)
                     return;
 
-                foreach(var contact in this.ContactsInfo)
-                    if(contact != SelectedItem)
-                        contact.IsExpanded = !SelectedItem.IsExpanded;
+                if (ContactsInfo != null)
+                {
+                    foreach (var contact in ContactsInfo)
+                    {
+                        if (contact != SelectedItem)
+                            contact.IsExpanded = !SelectedItem.IsExpanded;
+                    }
+                }
             }
         }
+
 
         internal async void OnShowContactCommand()
         {
             IsReadOnly = true;
             var editPage = new ContactPage();
             editPage.BindingContext = this;
-            await App.Current.MainPage.Navigation.PushAsync(editPage);
+            var navigation = Application.Current?.Windows[0].Navigation;
+            if (navigation != null)
+                await navigation.PushModalAsync(editPage);
         }
 
         internal void OnEditContactCommand()
@@ -192,15 +206,20 @@ namespace ListViewMAUI
 
         internal async void OnDeleteContactCommand()
         {
-            contactsInfo.Remove(SelectedItem);
-            await App.Current.MainPage.Navigation.PopAsync();
+            if (contactsInfo != null && SelectedItem != null)
+            {
+                contactsInfo.Remove(SelectedItem);
+            }
+            var navigation = Application.Current?.Windows[0].Navigation;
+            if (navigation != null)
+                await navigation.PopModalAsync();
         }
 
         #endregion
 
         #region Interface Member
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged(string name)
         {

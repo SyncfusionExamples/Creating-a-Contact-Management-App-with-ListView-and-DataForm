@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
              xmlns:chip="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:data="clr-namespace:Syncfusion.Maui.DataSource.Extensions;assembly=Syncfusion.Maui.DataSource"
              xmlns:local="clr-namespace:ListViewMAUI"
              x:Class="ListViewMAUI.MainPage">
 
@@ -31,12 +32,13 @@
                     Grid.Column="1"
                 FontSize="Medium" >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding CreateContactCommand}"/>
+                        <TapGestureRecognizer x:DataType="local:ViewModel" Command="{Binding CreateContactCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
       
             <syncfusion:SfListView x:Name="listView" Grid.Row="1"
+                                   x:DataType="local:ViewModel"
                                 AutoFitMode="DynamicHeight"                          
                                 ScrollBarVisibility="Always"
                                 SelectionMode="Single"
@@ -49,14 +51,17 @@
                 <syncfusion:SfListView.GroupHeaderTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Key}"
+                        <Label  x:DataType="data:GroupResult" Text="{Binding Key}"
                                 FontSize="20"
                                 FontFamily="Roboto-Medium"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start"
                                 WidthRequest="200"
-                                Margin="20,0,0,0" />
-                        </StackLayout>
+                                Margin="20,0,0,0" >
+                            
+                        </Label>
+                            
+                    </StackLayout>
                     </DataTemplate>
                 </syncfusion:SfListView.GroupHeaderTemplate>
 
@@ -70,14 +75,14 @@
                                 <RowDefinition Height="2" />
                             </Grid.RowDefinitions>
 
-                            <Grid x:Name="grid" RowSpacing="0" HeightRequest="50"  BackgroundColor="White">
+                            <Grid x:Name="grid" RowSpacing="0" HeightRequest="50"  BackgroundColor="White" x:DataType="local:ContactInfo">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="56" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0"
+                                <Image Grid.Column="0" 
                                     Source="{Binding ContactImage}"
                                     VerticalOptions="Center"
                                     HorizontalOptions="Center"
@@ -101,7 +106,7 @@
 
                             </Grid>
 
-                            <Grid Margin="56,0,0,0" IsVisible="{Binding IsExpanded, Mode=TwoWay}"        
+                            <Grid Margin="56,0,0,0" x:DataType="local:ContactInfo" IsVisible="{Binding IsExpanded, Mode=TwoWay}"        
                                             Grid.Row="1" 
                                             BackgroundColor="White"                                                  
                                             HorizontalOptions="FillAndExpand"        
@@ -110,18 +115,19 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Text="{Binding ContactNumber}" FontSize="{OnPlatform Default=16,WinUI=14}"  CharacterSpacing="0.5" VerticalOptions="Start"/>
+                                <Label x:DataType="local:ContactInfo" Text="{Binding ContactNumber}" FontSize="{OnPlatform Default=16,WinUI=14}"  CharacterSpacing="0.5" VerticalOptions="Start"/>
                                 <chip:SfChipGroup Grid.Row="1" 
                                                     ItemHeight="40" 
                                                     ChipCornerRadius="20" 
                                                     ChipBackground="Transparent" 
                                                     ChipStrokeThickness="0"      
                                                     ChipPadding="10"  
-                                                    ChipClicked="SfChipGroup_ChipClicked"                                                                                  
-                                                    ItemsSource="{Binding Path=BindingContext.ContactOptions, Source={x:Reference listView}}">
+                                                    ChipClicked="SfChipGroup_ChipClicked"    
+                                                  x:DataType="local:ViewModel"
+                                                    ItemsSource="{Binding Path=ContactOptions, Source={x:Reference listView}}">
                                     <chip:SfChipGroup.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Text="{Binding ActionIcon}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="40" FontFamily="MauiSampleFontIcon" TextColor="{StaticResource Primary}" FontSize="Medium">
+                                            <Label x:DataType="local:ContactOption" Text="{Binding ActionIcon}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="40" FontFamily="MauiSampleFontIcon" TextColor="{StaticResource Primary}" FontSize="Medium">
                                             </Label>
                                         </DataTemplate>
                                     </chip:SfChipGroup.ItemTemplate>

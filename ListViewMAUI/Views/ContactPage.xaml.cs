@@ -9,29 +9,29 @@ namespace ListViewMAUI
             InitializeComponent();
         }
 
-        private void OnChipClicked(object sender, EventArgs e)
+        private void OnChipClicked(object? sender, EventArgs e)
         {
             var viewmodel = this.BindingContext as ViewModel;
             var chip = (sender as SfChip);
-            var layout = chip.Children[0] as HorizontalStackLayout;
-            var action = (layout.BindingContext as ContactOption).ActionName;
+            var layout = chip?.Children[0] as HorizontalStackLayout;
+            var action = (layout?.BindingContext as ContactOption)?.ActionName;
             if (string.IsNullOrEmpty(action))
                 return;
 
             switch(action)
             {
                 case "Edit":
-                    viewmodel.OnEditContactCommand();
+                    viewmodel?.OnEditContactCommand();
                     break;
                 case "Delete":
-                    viewmodel.OnDeleteContactCommand();
+                    viewmodel?.OnDeleteContactCommand();
                     break;
                 case "Save":
                     contactForm.Commit();
-                    viewmodel.OnSaveContact();
+                    viewmodel?.OnSaveContact();
                     break;
                 case "Cancel":
-                    viewmodel.OnCancelContact();
+                    viewmodel?.OnCancelContact();
                     break;
             }
         }

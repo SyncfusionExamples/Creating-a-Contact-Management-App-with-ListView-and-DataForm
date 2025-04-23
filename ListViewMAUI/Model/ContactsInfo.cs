@@ -110,8 +110,8 @@ namespace ListViewMAUI
 
     public class ContactOption
     {
-        public string ActionName { get; set;}
+        public string ActionName { get; set; } = string.Empty;
 
-        public string ActionIcon { get; set;}
+        public string ActionIcon { get; set; } = string.Empty;
     }
 }
