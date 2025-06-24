@@ -8,9 +8,7 @@
              x:Class="ListViewMAUI.ContactPage">
     <ContentPage.Content>
         <Grid RowDefinitions="80, 0.9*, 1, 0.1*" x:DataType="local:ViewModel">
-            <Grid.BindingContext>
-                <Binding Path="SelectedItem"/>
-            </Grid.BindingContext>
+           
             <Image Grid.Column="0" x:DataType="local:ContactInfo"
                                Source="{Binding ContactImage}"
                                VerticalOptions="Center"
