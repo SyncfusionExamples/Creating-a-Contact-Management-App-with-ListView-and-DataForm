@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Android.Content.Res;
 #endif
 
-namespace ListViewMAUI.Helper
+namespace ListViewMAUI
 {
     public class SfEntry : Entry
     {

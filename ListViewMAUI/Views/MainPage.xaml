@@ -5,9 +5,7 @@
              xmlns:chip="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:data="clr-namespace:Syncfusion.Maui.DataSource.Extensions;assembly=Syncfusion.Maui.DataSource"
              xmlns:local="clr-namespace:ListViewMAUI"
-             xmlns:entry="clr-namespace:ListViewMAUI.Helper"
              x:Class="ListViewMAUI.MainPage">
-
 
     <ContentPage.Behaviors>
         <local:SfListViewGroupingBehavior/>
@@ -37,7 +35,7 @@
                HorizontalOptions="Center"
                FontSize="16"
                Margin="10,0,12,0" />
-           <entry:SfEntry  x:Name="searchBar"
+           <local:SfEntry  x:Name="searchBar"
             Grid.Column="1" 
             BackgroundColor="Transparent"
             VerticalTextAlignment="{OnPlatform Default=Start, MacCatalyst=Center, iOS=Center}"
